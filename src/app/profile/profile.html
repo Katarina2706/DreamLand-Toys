@@ -1,0 +1,84 @@
+<main class="profile-page">
+
+  <div class="profile-header">
+    <h1>Moj profil</h1>
+    <p>Pregledajte i izmenite podatke svog naloga</p>
+  </div>
+
+  <div class="profile-card">
+
+    <div class="profile-form">
+
+      <label>
+        Ime i prezime
+        <input
+          type="text"
+          [(ngModel)]="name"
+          placeholder="Ime i prezime"
+        >
+      </label>
+
+      <label>
+        Email
+        <input
+          type="email"
+          [(ngModel)]="email"
+          placeholder="Email"
+        >
+      </label>
+
+      <label>
+        Telefon
+        <input
+          type="text"
+          [(ngModel)]="phone"
+          placeholder="Telefon"
+        >
+      </label>
+
+      <label>
+        Adresa
+        <input
+          type="text"
+          [(ngModel)]="address"
+          placeholder="Adresa"
+        >
+      </label>
+
+      <label>
+        Omiljeni tipovi igračaka
+        <input
+          type="text"
+          [(ngModel)]="favoriteTypes"
+          placeholder="Na primer: Slagalice"
+        >
+      </label>
+
+      <label>
+        Lozinka
+        <input
+          type="password"
+          [(ngModel)]="password"
+          placeholder="Lozinka"
+        >
+      </label>
+
+    </div>
+
+        @if (message) {
+          <p class="message">
+            {{ message }}
+          </p>
+        }
+
+    <button
+      class="save-button"
+      type="button"
+      (click)="save()"
+    >
+      Sačuvaj izmene
+    </button>
+
+  </div>
+
+</main>

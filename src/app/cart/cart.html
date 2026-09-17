@@ -1,0 +1,271 @@
+<main class="cart">
+
+  <div class="cart-header">
+
+    <h1>Korpa za rezervaciju</h1>
+
+    <p>Pregled Vaših rezervisanih igračaka</p>
+
+    <button
+      class="back"
+      type="button"
+      routerLink="/"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Nazad
+    </button>
+
+  </div>
+
+
+  @if (cartService.items().length === 0) {
+
+    <div class="empty-cart">
+
+      <mat-icon>shopping_cart</mat-icon>
+
+      <h2>Korpa je prazna</h2>
+
+      <p>
+        Trenutno nemate rezervisanih igračaka.
+      </p>
+
+      <button
+        type="button"
+        routerLink="/"
+      >
+        Pogledaj igračke
+      </button>
+
+    </div>
+
+  }
+
+
+  @if (cartService.items().length > 0) {
+
+    <div class="cart-items">
+
+      @for (
+        item of cartService.items();
+        track item.toy.toyId
+      ) {
+
+        <div class="cart-item">
+
+          <div class="cart-image">
+
+            <img
+              [src]="item.toy.imageUrl"
+              [alt]="item.toy.name"
+            >
+
+          </div>
+
+
+          <div class="cart-info">
+
+            <h2>{{ item.toy.name }}</h2>
+
+            <p class="toy-description">
+              {{ item.toy.description }}
+            </p>
+
+
+            <div class="cart-details">
+
+              <span>
+                <strong>Tip:</strong>
+                {{ item.toy.type.name }}
+              </span>
+
+              <span>
+                <strong>Uzrast:</strong>
+                {{ item.toy.ageGroup.name }}
+              </span>
+
+              <span>
+                <strong>Ciljna grupa:</strong>
+                {{ item.toy.targetGroup }}
+              </span>
+
+            </div>
+
+
+            <div class="status-control">
+
+              <strong>Status:</strong>
+
+              <span class="status">
+                {{ item.status }}
+              </span>
+
+            </div>
+
+
+            @if (item.status === 'rezervisano') {
+
+              <div class="status-actions">
+
+                <button
+                  type="button"
+                  (click)="changeStatus(
+                    item.toy.toyId,
+                    'pristiglo'
+                  )"
+                >
+                  <mat-icon>check_circle</mat-icon>
+                  Označi kao pristiglo
+                </button>
+
+
+                <button
+                  type="button"
+                  (click)="changeStatus(
+                    item.toy.toyId,
+                    'otkazano'
+                  )"
+                >
+                  <mat-icon>cancel</mat-icon>
+                  Otkaži
+                </button>
+
+              </div>
+
+            }
+
+
+            @if (item.status === 'pristiglo') {
+
+              <div class="review-form">
+
+                <div class="rating-section">
+
+                  <span class="review-title">
+                    Vaša ocena
+                  </span>
+
+                  <div class="stars">
+
+                    @for (
+                      star of [1, 2, 3, 4, 5];
+                      track star
+                    ) {
+
+                      <button
+                        type="button"
+                        class="star-button"
+                        (click)="rate(
+                          item.toy.toyId,
+                          star
+                        )"
+                      >
+                        <mat-icon>
+                          {{
+                            item.rating &&
+                            star <= item.rating
+                              ? 'star'
+                              : 'star_border'
+                          }}
+                        </mat-icon>
+                      </button>
+
+                    }
+
+                  </div>
+
+                </div>
+
+
+                <div class="comment-section">
+
+                  <label
+                    class="review-title"
+                    [for]="'review-' + item.toy.toyId"
+                  >
+                    Vaša recenzija
+                  </label>
+
+                  <textarea
+                    [id]="'review-' + item.toy.toyId"
+                    [(ngModel)]="
+                      reviewComments[item.toy.toyId]
+                    "
+                    rows="4"
+                    placeholder="Napišite Vaše mišljenje o igrački..."
+                  ></textarea>
+
+                  <button
+                    type="button"
+                    class="save-review"
+                    (click)="saveReview(
+                      item.toy.toyId,
+                      item.rating
+                    )"
+                  >
+                    Sačuvaj recenziju
+                  </button>
+
+                </div>
+
+              </div>
+
+            }
+
+
+            @if (item.status === 'otkazano') {
+
+              <p class="cancelled">
+                Rezervacija je otkazana.
+              </p>
+
+            }
+
+          </div>
+
+
+          <div class="cart-actions">
+
+            <strong class="price">
+              {{ item.toy.price }} RSD
+            </strong>
+
+
+            @if (item.status === 'pristiglo') {
+
+              <button
+                class="delete-button"
+                type="button"
+                title="Ukloni iz korpe"
+                (click)="remove(
+                  item.toy.toyId,
+                  item.toy.name
+                )"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            }
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <div class="cart-total">
+
+      <span>Ukupno:</span>
+
+      <strong>
+        {{ cartService.getTotal() }} RSD
+      </strong>
+
+    </div>
+
+  }
+
+</main>

@@ -1,0 +1,109 @@
+<main class="signup-page">
+
+  <div class="signup-card">
+
+    <h1>Registracija</h1>
+
+    <p>
+      Kreirajte svoj DreamLand Toys nalog
+    </p>
+
+
+    <label>
+      Ime i prezime
+
+      <input
+        type="text"
+        [(ngModel)]="name"
+        placeholder="Ime i prezime"
+        autocomplete="off"
+      >
+    </label>
+
+
+    <label>
+      Email
+
+      <input
+        type="email"
+        [(ngModel)]="email"
+        placeholder="Email"
+        autocomplete="off"
+      >
+    </label>
+
+
+    <label>
+      Telefon
+
+      <input
+        type="text"
+        [(ngModel)]="phone"
+        placeholder="Telefon"
+        autocomplete="off"
+      >
+    </label>
+
+
+    <label>
+      Adresa
+
+      <input
+        type="text"
+        [(ngModel)]="address"
+        placeholder="Adresa"
+        autocomplete="off"
+      >
+    </label>
+
+
+    <label>
+      Omiljeni tipovi igračaka
+
+      <input
+        type="text"
+        [(ngModel)]="favoriteTypes"
+        placeholder="Na primer: Slagalice"
+        autocomplete="off"
+      >
+    </label>
+
+
+    <label>
+      Lozinka
+
+      <input
+        type="password"
+        [(ngModel)]="password"
+        placeholder="Lozinka"
+        autocomplete="new-password"
+      >
+    </label>
+
+
+    @if (error()) {
+      <p class="error">
+        {{ error() }}
+      </p>
+    }
+
+
+    <button
+      type="button"
+      (click)="register()"
+    >
+      Registruj se
+    </button>
+
+
+    <p class="login-link">
+      Već imate nalog?
+
+      <a routerLink="/login">
+        Prijavite se
+      </a>
+    </p>
+
+  </div>
+
+</main>

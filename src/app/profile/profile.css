@@ -1,0 +1,129 @@
+.profile-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 45px 30px 70px;
+}
+
+.profile-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.profile-header h1 {
+  margin: 0 0 8px;
+  color: #ff6f9f;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.profile-header p {
+  margin: 0;
+  color: #c9bdc1;
+  font-size: 16px;
+}
+
+.profile-card {
+  padding: 35px;
+  background-color: #1c181b;
+  border: 1px solid #493a40;
+  border-radius: 28px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+}
+
+.profile-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.profile-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.profile-form input {
+  width: 100%;
+  padding: 13px 15px;
+  color: #ffffff;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 15px;
+  background-color: #211c20;
+  border: 1px solid #5b4950;
+  border-radius: 12px;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.profile-form input::placeholder {
+  color: #887c80;
+}
+
+.profile-form input:focus {
+  border-color: #ff6f9f;
+  box-shadow: 0 0 0 2px rgba(255, 111, 159, 0.1);
+}
+
+.message {
+  margin: 25px 0 0;
+  padding: 12px 15px;
+  color: #ff9fbe;
+  background-color: #2b2024;
+  border: 1px solid #63404c;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.save-button {
+  display: block;
+  min-width: 180px;
+  margin: 30px auto 0;
+  padding: 13px 24px;
+  color: #ffffff;
+  background-color: #a83e63;
+  border: 1px solid #d65c87;
+  border-radius: 22px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.save-button:hover {
+  background-color: #c34c76;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 650px) {
+
+  .profile-page {
+    padding: 30px 16px 50px;
+  }
+
+  .profile-header h1 {
+    font-size: 30px;
+  }
+
+  .profile-card {
+    padding: 22px;
+
+    border-radius: 22px;
+  }
+
+  .profile-form {
+    grid-template-columns: 1fr;
+  }
+
+  .save-button {
+    width: 100%;
+  }
+}

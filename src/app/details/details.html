@@ -1,0 +1,181 @@
+@if (loading()) {
+  <app-loading></app-loading>
+}
+
+@if (!loading() && toy(); as toy) {
+
+  <main class="details">
+
+    <button
+      class="back"
+      type="button"
+      routerLink="/"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Nazad
+    </button>
+
+
+    <div class="details-card">
+
+      <div class="toy-details">
+
+        <div class="details-image">
+
+          <img
+            [src]="toy.imageUrl"
+            [alt]="toy.name"
+          >
+
+        </div>
+
+
+        <div class="details-content">
+
+          <h1>
+            {{ toy.name }}
+          </h1>
+
+          <p class="description">
+            {{ toy.description }}
+          </p>
+
+          <p>
+            <strong>Tip:</strong>
+            {{ toy.type.name }}
+          </p>
+
+          <p>
+            <strong>Uzrast:</strong>
+            {{ toy.ageGroup.name }}
+          </p>
+
+          <p>
+            <strong>Ciljna grupa:</strong>
+            {{ toy.targetGroup }}
+          </p>
+
+          <p>
+            <strong>Datum proizvodnje:</strong>
+            {{ toy.productionDate }}
+          </p>
+
+          <p class="price">
+            <strong>Cena:</strong>
+            {{ toy.price }} RSD
+          </p>
+
+
+          <div class="details-actions">
+
+            <button
+              class="reserve"
+              type="button"
+              (click)="reserve()"
+            >
+              Rezerviši
+            </button>
+
+            <a
+              class="cart-button"
+              routerLink="/cart"
+            >
+              Pogledaj korpu
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="reviews">
+
+        <h2>Recenzije</h2>
+
+
+        @if (
+          reviewService.getReviewsForToy(toy.toyId).length > 0
+        ) {
+
+          <div class="average-rating">
+
+            <strong>
+              Prosečna ocena:
+            </strong>
+
+            <span>
+              {{
+                reviewService
+                  .getAverageRating(toy.toyId)
+                  .toFixed(1)
+              }} / 5
+            </span>
+
+            <mat-icon>star</mat-icon>
+
+          </div>
+
+
+          <div class="review-list">
+
+            @for (
+              review of reviewService.getReviewsForToy(toy.toyId);
+              track review.reviewId
+            ) {
+
+              <div class="review-card">
+
+                <div class="review-header">
+
+                  <strong>
+                    {{ review.userName }}
+                  </strong>
+
+
+                  <div class="review-stars">
+
+                    @for (
+                      star of [1, 2, 3, 4, 5];
+                      track star
+                    ) {
+
+                      <mat-icon>
+                        {{
+                          star <= review.rating
+                            ? 'star'
+                            : 'star_border'
+                        }}
+                      </mat-icon>
+
+                    }
+
+                  </div>
+
+                </div>
+
+                <p>
+                  {{ review.comment }}
+                </p>
+
+              </div>
+
+            }
+
+          </div>
+
+        } @else {
+
+          <p class="no-reviews">
+            Ova igračka još nema recenzija.
+          </p>
+
+        }
+
+      </div>
+
+    </div>
+
+  </main>
+}

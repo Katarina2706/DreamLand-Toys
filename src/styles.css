@@ -1,1 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.cdk-overlay-pane .mat-mdc-select-panel {
+  background-color: #1d191b !important;
+
+  border: 1px solid #4d3d43;
+  border-radius: 16px !important;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55) !important;
+
+  overflow: hidden;
+}
+
+.mat-mdc-option {
+  background-color: #1d191b !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-option .mdc-list-item__primary-text {
+  color: inherit !important;
+}
+
+.mat-mdc-option:hover {
+  background-color: #35262c !important;
+}
+
+.mat-mdc-option.mat-mdc-option-active {
+  background-color: #35262c !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected {
+  background-color: #482b35 !important;
+  color: #ff6f9f !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected.mat-mdc-option-active {
+  background-color: #482b35 !important;
+  color: #ff6f9f !important;
+}
+
+.cdk-overlay-container {
+  z-index: 1000;
+}

@@ -1,0 +1,264 @@
+@if (loading()) {
+  <app-loading></app-loading>
+}
+
+@if (!loading() && toys().length > 0) {
+
+  <main class="home">
+
+    <div class="home-header">
+
+      <h1>DreamLand Toys</h1>
+      <p>
+        Pronađite savršenu igračku za Vaše mališane
+      </p>
+
+    </div>
+
+    <div class="filter-panel">
+
+      <div class="filters">
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Naziv igračke</mat-label>
+
+          <input
+            matInput
+            type="text"
+            (input)="filterName($event)"
+          >
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Opis igračke</mat-label>
+
+          <input
+            matInput
+            type="text"
+            (input)="filterDescription($event)"
+          >
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Tip igračke</mat-label>
+
+          <mat-select
+            (selectionChange)="selectedType = $event.value; filterToys()"
+          >
+
+            <mat-option value="">
+              Svi tipovi
+            </mat-option>
+
+            @for (type of types; track type) {
+
+              <mat-option [value]="type">
+                {{ type }}
+              </mat-option>
+
+            }
+
+          </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Uzrast</mat-label>
+
+          <mat-select
+            (selectionChange)="selectedAge = $event.value; filterToys()"
+          >
+
+            <mat-option value="">
+              Svi uzrasti
+            </mat-option>
+
+            @for (age of ageGroups; track age) {
+
+              <mat-option [value]="age">
+                {{ age }}
+              </mat-option>
+
+            }
+
+          </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Ciljna grupa</mat-label>
+
+          <mat-select
+            (selectionChange)="selectedTarget = $event.value; filterToys()"
+          >
+
+            <mat-option value="">
+              Sve ciljne grupe
+            </mat-option>
+
+            <mat-option value="dečak">
+              Dečaci
+            </mat-option>
+
+            <mat-option value="devojčica">
+              Devojčice
+            </mat-option>
+
+            <mat-option value="svi">
+              Svi
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Datum proizvodnje</mat-label>
+
+          <input
+            matInput
+            type="date"
+            (change)="filterDate($event)"
+          >
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Maksimalna cena</mat-label>
+
+          <input
+            matInput
+            type="number"
+            min="0"
+            (input)="filterPrice($event)"
+          >
+
+          <span matTextSuffix>
+            RSD
+          </span>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Pretraži recenzije</mat-label>
+
+          <input
+            matInput
+            type="text"
+            (input)="filterReview($event)"
+          >
+
+        </mat-form-field>
+
+
+      </div>
+
+    </div>
+
+    <div class="toys">
+
+      @for (toy of filteredToys(); track toy.toyId) {
+
+        <div class="toy-card">
+
+          <div class="toy-image">
+
+            <img
+              [src]="toy.imageUrl"
+              [alt]="toy.name"
+            >
+
+          </div>
+
+          <div class="toy-content">
+
+            <h2>
+              {{ toy.name }}
+            </h2>
+
+            <p class="description">
+              {{ toy.description }}
+            </p>
+
+            @if (
+              reviewService
+                .getReviewsForToy(toy.toyId)
+                .length > 0
+            ) {
+
+              <div class="toy-rating">
+
+                <mat-icon>
+                  star
+                </mat-icon>
+
+                <span>
+                  {{
+                    reviewService
+                      .getAverageRating(toy.toyId)
+                      .toFixed(1)
+                  }} / 5
+                </span>
+
+              </div>
+
+            }
+
+            <div class="toy-footer">
+
+              <span class="price">
+                {{ toy.price }} RSD
+              </span>
+
+              <button
+                mat-flat-button
+                type="button"
+                [routerLink]="[
+                  '/toy',
+                  toy.toyId
+                ]"
+              >
+                Detalji
+              </button>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+    @if (filteredToys().length === 0) {
+
+      <div class="no-results">
+
+        <h2>
+          Nema rezultata
+        </h2>
+
+        <p>
+          Nema igračaka koje odgovaraju pretrazi.
+        </p>
+
+      </div>
+
+    }
+
+
+  </main>
+
+}
